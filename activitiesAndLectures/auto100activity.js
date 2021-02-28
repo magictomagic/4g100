@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         auto100activity
-// @version      0.0.2
+// @version      0.0.3
 // @namespace    http://tampermonkey.net/
 // @description  正常操作，点击“在线办理”，然后躺着40分钟后，100个活动就帮你选好了。已知问题：测试活动也会给你选上去。
 // @author       magictomagic
@@ -119,20 +119,48 @@ function jdktf() {
             await sleep(800);
             document.getElementsByTagName("tbody")[0].children[column].click() //document.getElementsByTagName("tbody")[0].children[9]
                 // console.log("column selected");
-            await sleep(1000);
+            await sleep(1000); // 活动名称
 
             document.getElementsByClassName("el-form-item is-required el-form-item--medium col-md-4 type-select")[0].children[1].children[0].children[0].click();
             await sleep(800);
-            document.querySelectorAll(".el-scrollbar__view.el-select-dropdown__list")[3].children[randomNum(0, 9)].click() // 10 个
+            document.querySelectorAll(".el-scrollbar__view.el-select-dropdown__list")[3].children[randomNum(0, 9)].click() // 活动类型 // 10 个
             await sleep(600);
             document.getElementsByClassName("el-form-item is-required el-form-item--medium col-md-4 type-select")[1].children[1].children[0].children[0].click();
             await sleep(800);
-            document.getElementsByClassName("el-scrollbar__view el-select-dropdown__list")[3].children[randomNum(0, 7)].click() // 8 个
+            document.getElementsByClassName("el-scrollbar__view el-select-dropdown__list")[3].children[randomNum(0, 7)].click() // 活动级别 // 8 个
             await sleep(600);
-            document.querySelectorAll("div[aria-label='checkbox-group']")[1].children[randomNum(0, 7)].click() // 8 个
+            document.querySelectorAll("div[aria-label='checkbox-group']")[1].children[randomNum(0, 7)].click() // 能力标签 // 8 个
             await sleep(800);
-            document.getElementsByClassName("el-radio__label")[3].click()
-            await sleep(3000);
+            document.getElementsByClassName("el-radio__label")[3].click() // 活动形式
+            await sleep(2000);
+
+            document.querySelector("#app  div.form-area > form div.item-xsxx input").click();
+            await sleep(800);
+            // document.querySelector("body > div.el-popper li:nth-child(2) > span").click(); // 线上线下
+            document.getElementsByClassName("el-scrollbar")[3].getElementsByClassName("el-select-dropdown__item")[1].click();
+            await sleep(1000);
+
+            // paperwork
+            let sponsor = document.querySelector("#app form div.form-item > div > input"); // 主办方
+            sponsor.value === "" && function() {
+                sponsor.value = "西安交通大学"
+                let sponsor_evt = new Event('input')
+                sponsor.dispatchEvent(sponsor_evt)
+            }();
+
+            let activity_description = document.getElementsByTagName("textarea")[0]; // 活动描述
+            activity_description.value === "" && function() {
+                activity_description.value = "一次非常棒的活动"
+                let activity_evt = new Event("input")
+                activity_description.dispatchEvent(activity_evt)
+            }();
+
+            let activity_location = document.querySelector("#app div.item-hddd input"); // 活动地点
+            activity_location.value === "" && function() {
+                activity_location.value = "西安交通大学"
+                let location_evt = new Event('input')
+                activity_location.dispatchEvent(location_evt)
+            }();
 
             let ele = document.getElementsByTagName("textarea")[1]
                 // let evt = document.createEvent('HTMLEvents')
