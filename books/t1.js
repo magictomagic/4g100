@@ -1,5 +1,14 @@
-let aa = "《丝绸之路》"
-console.log(aa.match(/《(.*?)》/))
-
-let bb = aa.match(/《(.*?)》/)[1]
-console.log(bb)
+function randomNum(minNum, maxNum) {
+    switch (arguments.length) {
+        case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+            break;
+        case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+console.log(randomNum(1,3))
